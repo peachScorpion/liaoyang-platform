@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>联通员工疗休养平台 · 高保真操作页面</title>
+<style>
+:root{
+  --brand:#E84C6B;
+  --brand-2:#FF7A8F;
+  --brand-dark:#CE2C57;
+  --grad:linear-gradient(135deg,#FF8AA0 0%,#E84C6B 55%,#CE2C57 100%);
+  --grad-btn:linear-gradient(90deg,#FF7A8F,#E84C6B 60%,#CE2C57);
+  --bg:#F2F3F7;
+  --card:#fff;
+  --ink:#26282c;
+  --ink2:#8A909C;
+  --ink3:#B5BAC4;
+  --line:#EEF0F4;
+  --ok:#2EBD66;
+  --warn:#F5A623;
+  --gold:#D9A03C;
+  --shadow:0 6px 24px rgba(38,40,44,.06);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;background:#0f1117;color:var(--ink);padding-bottom:80px}
+.ic{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+/* ===== 工具栏 ===== */
+.toolbar{position:sticky;top:0;z-index:999;background:rgba(15,17,23,.94);backdrop-filter:blur(10px);color:#fff;padding:16px 28px;border-bottom:1px solid rgba(255,255,255,.08)}
+.toolbar h1{font-size:18px;font-weight:700;letter-spacing:.5px}
+.toolbar p{font-size:12px;color:#9aa0ad;margin-top:4px}
+.toolbar .tag{display:inline-block;background:var(--grad);border-radius:20px;font-size:11px;padding:2px 10px;margin-left:10px;vertical-align:2px}
+
+.section{margin:48px auto 8px;max-width:1440px;padding:0 28px}
+.section .bar{display:flex;align-items:center;gap:12px}
+.section .bar::before{content:"";width:5px;height:22px;border-radius:3px;background:var(--grad)}
+.section h2{font-size:20px;color:#fff;font-weight:700}
+.section .sub{font-size:12px;color:#7a8090;margin-top:6px;margin-left:17px}
+
+.gallery{max-width:1440px;margin:20px auto 0;padding:0 28px;display:flex;flex-wrap:wrap;gap:36px;align-items:flex-start}
+
+/* 手机外壳 */
+.phone-wrap{width:375px;display:flex;flex-direction:column;gap:12px}
+.phone-label{display:flex;align-items:center;gap:8px;font-size:13px;color:#c9cdd6;font-weight:600}
+.phone-label i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--grad);box-shadow:0 0 0 3px rgba(232,76,107,.18)}
+.phone{width:375px;background:#fff;border-radius:44px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.45),0 0 0 10px #1c1f27,0 0 0 11px #3a3f4a;position:relative}
+.phone .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:150px;height:26px;background:#000;border-radius:0 0 16px 16px;z-index:50}
+.screen{width:375px;height:812px;background:var(--bg);position:relative;overflow:hidden;display:flex;flex-direction:column}
+.statusbar{height:46px;display:flex;align-items:center;justify-content:space-between;padding:0 24px 0 28px;font-size:13px;font-weight:600;color:#26282c;flex-shrink:0}
+.statusbar .sb-r{display:flex;align-items:center;gap:5px}
+.home-ind{width:375px;background:#fff;display:flex;justify-content:center;padding:10px 0 8px}
+.home-ind span{width:130px;height:5px;background:#d5d8df;border-radius:3px}
+
+/* 移动组件 */
+.m-nav{height:50px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;position:relative;flex-shrink:0}
+.m-nav .tt{font-size:16px;font-weight:600;position:absolute;left:50%;transform:translateX(-50%)}
+.m-nav .side{width:64px;display:flex;align-items:center;gap:16px;color:#26282c}
+.m-nav .side.right{justify-content:flex-end}
+.m-search{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #ffd7df;border-radius:20px;padding:8px 14px;font-size:13px}
+.m-search .loc{color:var(--brand);font-weight:600;white-space:nowrap;display:flex;align-items:center;gap:3px}
+.m-search .ph{color:var(--ink2)}
+.px{color:var(--brand);font-weight:800}
+.px small{font-size:11px;font-weight:600}
+.ctag{display:inline-block;font-size:10px;color:#fff;background:var(--grad);border-radius:4px;padding:2px 6px;line-height:1.5}
+
+/* 楼层小标题 */
+.sub-t{display:flex;align-items:center;gap:6px;font-size:15px;font-weight:700;color:#26282c}
+
+/* 频道图标底 */
+.chip{width:46px;height:46px;border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto}
+.chip .ic{width:24px;height:24px}
+
+/* PC */
+.pc-wrap{width:100%;margin-bottom:24px}
+.pc-label{display:flex;align-items:center;gap:8px;font-size:14px;color:#c9cdd6;font-weight:600;margin-bottom:12px}
+.pc-label i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--grad);box-shadow:0 0 0 3px rgba(232,76,107,.18)}
+.pc-frame{border-radius:14px;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.5);border:1px solid #2a2e38;background:#fff}
+.pc-browser{height:44px;background:#23262e;display:flex;align-items:center;gap:8px;padding:0 16px}
+.pc-browser .dot{width:11px;height:11px;border-radius:50%}
+.pc-browser .addr{flex:1;margin-left:10px;background:#16181e;border-radius:8px;height:26px;display:flex;align-items:center;padding:0 12px;font-size:12px;color:#8a90a0}
+.pc-body{width:100%;background:#f4f5f8}
+.pctop{background:#fff;border-bottom:1px solid #eef0f4}
+.pctop-bar{max-width:1200px;margin:0 auto;height:74px;display:flex;align-items:center;gap:28px;padding:0 16px}
+.pctop .logo{display:flex;align-items:center;gap:10px;font-size:19px;font-weight:800;color:#c82a4f;white-space:nowrap}
+.pctop .logo .cn{width:38px;height:38px;border-radius:10px;background:var(--grad);display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;font-weight:800}
+.pctop nav{display:flex;gap:24px;font-size:15px}
+.pctop nav a{color:#333;text-decoration:none;position:relative;white-space:nowrap}
+.pctop nav a.on{color:var(--brand);font-weight:600}
+.pctop nav a.on::after{content:"";position:absolute;left:0;right:0;bottom:-25px;height:3px;background:var(--grad);border-radius:2px}
+.pctop .user{display:flex;align-items:center;gap:12px;font-size:13px;color:#555;margin-left:auto;white-space:nowrap}
+.pctop .user .pt{background:#fff3f5;color:var(--brand);border-radius:16px;padding:5px 14px;font-weight:600;border:1px solid #ffd7df}
+.pctop .avatar{width:34px;height:34px;border-radius:50%;background:linear-gradient(150deg,#9fe0b0,#4ca874);display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;font-weight:700}
+.container{max-width:1200px;margin:0 auto;padding:22px 16px 40px}
+.pc-card{background:#fff;border-radius:14px;box-shadow:var(--shadow);padding:22px}
+.pc-btn{display:inline-flex;align-items:center;justify-content:center;background:var(--grad-btn);color:#fff;border:none;border-radius:22px;font-size:15px;font-weight:600;padding:11px 30px;cursor:pointer}
+.pc-btn.ghost{background:#fff;border:1px solid var(--brand);color:var(--brand)}
+.pc-footer{background:#23262e;color:#8a90a0;text-align:center;padding:20px;font-size:12px}
+
+/* 风景图 */
+.photo{position:relative;overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo .badge{position:absolute;left:8px;bottom:8px;font-size:10px;color:#fff;background:rgba(0,0,0,.34);padding:2px 7px;border-radius:8px}
+.photo .corner{position:absolute;left:8px;top:8px}
+</style>
+</head>
+<body>
+
+<!-- 图标库 -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-hotel" viewBox="0 0 24 24"><path d="M4 4h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><path d="M9 8h6M9 12h6M9 16h6M12 4v16"/></symbol>
+  <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></symbol>
+  <symbol id="i-bus" viewBox="0 0 24 24"><path d="M4 6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M4 11h16M8 17v2M16 17v2M7 2a1 1 0 0 1 1 1v1h8V3a1 1 0 0 1 1-1"/></symbol>
+  <symbol id="i-train" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="13" rx="3"/><path d="M8 20l-2 2M16 20l2 2M9 8h.01M15 8h.01M5 12h14"/></symbol>
+  <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M2 9a3 3 0 0 1 0 6v3a1 1 0 0 0 1 1h18a1 1 0 0 0 1-1v-3a3 3 0 0 1 0-6V6a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1z"/><path d="M13 5v2M13 17v2M13 11v.01"/></symbol>
+  <symbol id="i-ship" viewBox="0 0 24 24"><path d="M2 20a2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 3 3 0 0 1 4 0 3 3 0 0 0 4 0 3 3 0 0 1 4 0 3 3 0 0 0 4 0 2.4 2.4 0 0 0 2-1"/><path d="M4 18 3 12h18l-1 6"/><path d="M12 3v7m0 0-4-3m4 3 4-3"/></symbol>
+  <symbol id="i-passport" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="2.6"/><path d="M9 16c0-1.6 1.4-2.6 3-2.6s3 1 3 2.6"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></symbol>
+  <symbol id="i-loc" viewBox="0 0 24 24"><path d="M12 21s-7-5.6-7-11a7 7 0 0 1 14 0c0 5.4-7 11-7 11z"/><circle cx="12" cy="10" r="2.4"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
+  <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.5v2M12 19.5v2M4.5 4.5l1.4 1.4M18.1 18.1l1.4 1.4M2.5 12h2M19.5 12h2M4.5 19.5l1.4-1.4M18.1 5.9l1.4-1.4"/></symbol>
+  <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="4" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.3" fill="currentColor" stroke="none"/><circle cx="20" cy="12" r="1.3" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 8v4.2l2.8 1.8"/></symbol>
+  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H19v3"/><path d="M3 7.5V17a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2H5.5A2.5 2.5 0 0 1 3 7.5z"/><path d="M16 13h3"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><rect x="4" y="8" width="16" height="12" rx="2"/><path d="M9 13h6"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13"/><path d="M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></symbol>
+  <symbol id="i-compass" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.5S4.5 16 2.8 11.6a5.2 5.2 0 0 1 9.2-4 5.2 5.2 0 0 1 9.2 4C19.5 16 12 20.5 12 20.5z"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.4"/><path d="M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5"/><path d="M16 4.6a3.4 3.4 0 0 1 0 6.8M18.5 14.6c1.6.7 2.5 2.2 2.5 4.4"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M6 3h12v18l-2-1.5L14 21l-2-1.5L10 21l-2-1.5L6 21z"/><path d="M9 8h6M9 12h6"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h14v16H6a2 2 0 0 0-2 2z"/><path d="M4 19a2 2 0 0 1 2-2h14"/></symbol>
+  <symbol id="i-headset" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="13" width="3" height="6" rx="1.5"/><rect x="18" y="13" width="3" height="6" rx="1.5"/><path d="M20 19a2 2 0 0 1-2 2h-2"/></symbol>
+  <symbol id="i-coin" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5v9M9.5 10h4a1.5 1.5 0 0 1 0 3H10"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/><path d="M10 21v-6h4v6"/></symbol>
+  <symbol id="i-cs" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 14a4 4 0 0 0 4 4h.5l1 2h5l1-2h.5a4 4 0 0 0 4-4"/><path d="M9 11h.01M15 11h.01"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m4 12.5 5 5L20 6.5"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M4 7h3l1.5-2.5h7L17 7h3a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.2"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></symbol>
+</svg>
+
+<div class="toolbar">
+  <h1>中国联通 · 员工疗休养平台<span class="tag">高保真操作页面</span></h1>
+  <p>主色 #E84C6B ｜ 移动端 8 页 + PC 端 4 页 ｜ 真实风景图 + 线性图标，静态预览用于截图</p>
+</div>
+
+<!-- ============ 移动端 ============ -->
+<div class="section"><div class="bar"><h2>移动端页面</h2></div><div class="sub">微信小程序 / APP · 375×812</div></div>
+
+<div class="gallery">
+
+  <!-- 01 登录页 -->
+  <div class="phone-wrap">
+    <div class="phone-label"><i></i>01 · 员工登录页</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar" style="color:#fff;position:absolute;top:0;left:0;right:0;z-index:5;background:transparent"><span>9:41</span><span class="sb-r"><svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx=".7"/><rect x="4.5" y="6" width="3" height="6" rx=".7"/><rect x="9" y="3.5" width="3" height="8.5" rx=".7"/><rect x="13.5" y="1" width="3" height="11" rx=".7"/></svg><span style="font-size:10px">5G</span><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="14" height="8" rx="2" fill="currentColor"/><path d="M23 4v4" stroke="currentColor" stroke-width="1.3"/></svg></span></div>
+        <div style="height:330px;background:var(--grad);position:relative;overflow:hidden">
+          <div style="text-align:center;padding-top:60px">
+            <div style="width:76px;height:76px;margin:0 auto;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(206,44,87,.4)">
+              <img src="assets/logo_unicom_clean.png" alt="中国联通" style="width:54px;height:54px;object-fit:contain">
+            </div>
+            <div style="color:#fff;font-size:18px;font-weight:700;margin-top:13px;letter-spacing:4px">中国联通 · 员工疗休养</div>
+            <div style="color:rgba(255,255,255,.82);font-size:12px;margin-top:8px">专属账号登录，尽享疗养权益</div>
+          </div>
+          <svg style="position:absolute;bottom:0;left:0" width="375" height="90" viewBox="0 0 375 90" preserveAspectRatio="none"><path fill="#ffffff" opacity=".95" d="M0 90 L0 58 L24 58 L24 40 L44 40 L44 58 L60 58 L60 30 L84 30 L84 58 L104 58 L104 50 L126 50 L126 58 L150 58 L150 24 L172 24 L172 44 L190 44 L190 58 L212 58 L212 36 L238 36 L238 58 L258 58 L258 30 L284 30 L284 58 L300 58 L300 46 L324 46 L324 58 L348 58 L348 66 L375 66 L375 90 Z"/></svg>
+        </div>
+        <div style="margin:-30px 18px 0;background:#fff;border-radius:18px;box-shadow:var(--shadow);padding:28px 24px">
+          <div style="text-align:center;font-size:17px;font-weight:700;color:#26282c">企业员工登录</div>
+          <div style="display:flex;gap:30px;justify-content:center;margin:22px 0 16px;font-size:14px">
+            <span style="color:var(--ink2)">邮箱</span>
+            <span style="color:#26282c;font-weight:600;position:relative;padding-bottom:6px">手机号<span style="position:absolute;left:0;bottom:0;width:100%;height:3px;background:var(--grad);border-radius:2px"></span></span>
+          </div>
+          <div style="border-bottom:1px solid #e6e8ee;padding:10px 2px;display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:15px;color:#26282c;letter-spacing:.5px">151 1234 5678</span>
+            <span style="font-size:12px;color:var(--brand)">获取验证码</span>
+          </div>
+          <div style="border-bottom:1px solid #e6e8ee;padding:10px 2px;display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:15px;color:#b5bac4;letter-spacing:2px">请输入验证码</span>
+            <span style="font-size:12px;color:#2f8ca8">重新发送 58s</span>
+          </div>
+          <button style="width:100%;margin-top:20px;background:var(--grad-btn);color:#fff;border:none;border-radius:24px;padding:13px;font-size:16px;font-weight:600;box-shadow:0 8px 20px rgba(232,76,107,.3)">登 录</button>
+        </div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:6px;margin-top:20px;font-size:11px;color:var(--ink2)">
+          <span style="width:14px;height:14px;border:1.5px solid var(--brand);border-radius:4px;background:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0"><svg class="ic" style="width:9px;height:9px;color:var(--brand)"><use href="#i-check"/></svg></span>
+          <span>登录即代表同意</span><span style="color:#2f8ca8">《会员注册协议》</span><span>及</span><span style="color:#2f8ca8">《隐私条款》</span>
+        </div>
+        <div style="margin-top:auto;padding:0 0 12px;display:flex;align-items:center;justify-content:center;gap:7px">
+          <img src="assets/logo_unicom_clean.png" alt="" style="width:22px;height:22px;object-fit:contain">
+          <span style="font-size:11px;color:#b5bac4;letter-spacing:1px">中国联通集团 · 员工疗休养专属服务</span>
+        </div>
+      </div>
+      <div class="home-ind"><span></span></div>
+    </div>
+  </div>
+
+  <!-- 02 首页 -->
+  <div class="phone-wrap">
+    <div class="phone-label"><i></i>02 · 平台首页</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="sb-r"><svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx=".7"/><rect x="4.5" y="6" width="3" height="6" rx=".7"/><rect x="9" y="3.5" width="3" height="8.5" rx=".7"/><rect x="13.5" y="1" width="3" height="11" rx=".7"/></svg><span style="font-size:10px">5G</span><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="14" height="8" rx="2" fill="currentColor"/><path d="M23 4v4" stroke="currentColor" stroke-width="1.3"/></svg></span></div>
+        <div style="background:#fff;padding:8px 14px 10px;display:flex;align-items:center;gap:10px">
+          <span style="color:#c82a4f;font-weight:800;font-size:15px;white-space:nowrap">联通员工</span>
+          <div class="m-search" style="flex:1;background:#f5f6f8;border:none"><svg class="ic" style="width:16px;height:16px;color:#8a909c"><use href="#i-search"/></svg><span class="ph">搜索产品 / 目的地</span></div>
+          <svg class="ic" style="color:#5b606a;width:20px;height:20px"><use href="#i-user"/></svg>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding-bottom:58px">
+          <div class="photo" style="margin:10px 14px;height:128px;border-radius:14px"><img src="assets/banner_mb.jpg" alt=""><div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.44),rgba(0,0,0,0))"></div><div style="position:absolute;left:16px;top:24px;color:#fff"><div style="font-size:17px;font-weight:800">中国联通 员工疗养专区</div><div style="font-size:11px;opacity:.92;margin-top:6px">随心出发 · 悦享疗养生活</div><div style="display:inline-block;margin-top:12px;background:#fff;color:#e84c6b;font-size:12px;font-weight:700;padding:5px 15px;border-radius:15px">员工疗养 ›</div></div></div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px 6px;padding:6px 12px 14px;background:#fff;margin-bottom:10px">
+            <div style="text-align:center"><div class="chip" style="background:#e7f4ec;color:#3aa569"><svg class="ic"><use href="#i-hotel"/></svg></div><div style="font-size:11px;margin-top:5px;color:#444">酒店</div></div>
+            <div style="text-align:center"><div class="chip" style="background:#eaf0fb;color:#4a7fd4"><svg class="ic"><use href="#i-plane"/></svg></div><div style="font-size:11px;margin-top:5px;color:#444">机票</div></div>
+            <div style="text-align:center"><div class="chip" style="background:#fdf0e2;color:#e5944a"><svg class="ic"><use href="#i-bus"/></svg></div><div style="font-size:11px;margin-top:5px;color:#444">跟团游</div></div>
+            <div style="text-align:center"><div class="chip" style="background:#f0ecfb;color:#8a6dd8"><svg class="ic"><use href="#i-train"/></svg></div><div style="font-size:11px;margin-top:5px;color:#444">火车票</div></div>
+            <div style="text-align:center"><div class="chip" style="background:#fdf5e2;color:#d9a03c"><svg class="ic"><use href="#i-ticket"/></svg></div><div style="font-size:11px;margin-top:5px;color:#444">门票</div></div>
+            <div style="text-align:center"><div class="chip" style="background:#e4f3f5;color:#3ba4b8"><svg class="ic"><use href="#i-ship"/></svg></div><div style="font-size:11px;margin-top:5px;color:#444">游轮</div></div>
+            <div style="text-align:center"><div class="chip" style="background:#fcecef;color:#dc6b84"><svg class="ic"><use href="#i-passport"/></svg></div><div style="font-size:11px;margin-top:5px;color:#444">签证</div></div>
+            <div style="text-align:center"><div class="chip" style="background:#eef0f4;color:#5b606a"><svg class="ic"><use href="#i-grid"/></svg></div><div style="font-size:11px;margin-top:5px;color:#444">全部</div></div>
+          </div>
+          <div style="margin:0 14px 12px;background:linear-gradient(115deg,#2b2b40,#3d3d5e);border-radius:14px;padding:14px 16px;color:#fff;display:flex;align-items:center;gap:12px">
+            <svg class="ic" style="width:26px;height:26px;color:#d9a03c"><use href="#i-coin"/></svg>
+            <div style="flex:1"><div style="font-size:11px;opacity:.75">我的疗养积点</div><div style="font-size:22px;font-weight:800;margin-top:3px">¥20,000.43</div><div style="font-size:10px;opacity:.75;margin-top:3px">即将过期 ¥900.00</div></div>
+            <div style="background:rgba(255,255,255,.16);border-radius:15px;padding:6px 13px;font-size:12px;display:flex;align-items:center;gap:2px">查看<svg class="ic" style="width:13px;height:13px"><use href="#i-chev"/></svg></div>
+          </div>
+          <div style="padding:0 14px">
+            <div class="sub-t" style="margin-bottom:10px"><span style="color:var(--brand)">●</span> 热门推荐 <span style="font-size:11px;color:var(--ink3);font-weight:400">为你精选疗养线路</span></div>
+            <div style="display:flex;gap:10px;overflow:hidden">
+              <div style="min-width:150px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)"><div class="photo" style="height:86px"><img src="assets/wuzhen.jpg" alt=""><div class="badge">江浙</div></div><div style="padding:8px 10px"><div style="font-size:12px;font-weight:600">心泊乌镇 双飞5日</div><div class="px" style="font-size:14px;margin-top:3px">¥3299 <small>起</small></div></div></div>
+              <div style="min-width:150px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)"><div class="photo" style="height:86px"><img src="assets/hulunbeier.jpg" alt=""><div class="badge">内蒙古</div></div><div style="padding:8px 10px"><div style="font-size:12px;font-weight:600">呼伦贝尔大草原</div><div class="px" style="font-size:14px;margin-top:3px">¥6980 <small>起</small></div></div></div>
+              <div style="min-width:150px;background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)"><div class="photo" style="height:86px"><img src="assets/erhai.jpg" alt=""><div class="badge">云南</div></div><div style="padding:8px 10px"><div style="font-size:12px;font-weight:600">住在洱海里 云南8日</div><div class="px" style="font-size:14px;margin-top:3px">¥9580 <small>起</small></div></div></div>
+            </div>
+          </div>
+          <div class="photo" style="margin:14px;height:100px;border-radius:14px"><img src="assets/banner_mb.jpg" alt=""><div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(217,160,60,.9),rgba(217,160,60,.35))"></div><div style="position:absolute;left:16px;top:18px;color:#fff"><div style="font-size:17px;font-weight:800">大美中国</div><div style="font-size:12px;margin-top:5px">员工疗养 · 尽享 95 折优惠</div></div></div>
+        </div>
+        <div style="position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #eef0f4;height:56px;display:flex;align-items:center;justify-content:space-around;font-size:11px">
+          <div style="text-align:center;color:var(--brand)"><svg class="ic" style="width:21px;height:21px;margin:0 auto"><use href="#i-home"/></svg>首页</div>
+          <div style="text-align:center;color:#999"><svg class="ic" style="width:21px;height:21px;margin:0 auto"><use href="#i-cs"/></svg>客服</div>
+          <div style="text-align:center;color:#999"><svg class="ic" style="width:21px;height:21px;margin:0 auto"><use href="#i-user"/></svg>我的</div>
+        </div>
+      </div>
+      <div class="home-ind"><span></span></div>
+    </div>
+  </div>
+
+  <!-- 03 产品列表页 -->
+  <div class="phone-wrap">
+    <div class="phone-label"><i></i>03 · 产品列表页（国内游）</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="sb-r"><svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx=".7"/><rect x="4.5" y="6" width="3" height="6" rx=".7"/><rect x="9" y="3.5" width="3" height="8.5" rx=".7"/><rect x="13.5" y="1" width="3" height="11" rx=".7"/></svg><span style="font-size:10px">5G</span><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="14" height="8" rx="2" fill="currentColor"/><path d="M23 4v4" stroke="currentColor" stroke-width="1.3"/></svg></span></div>
+        <div class="m-nav"><div class="side"><svg class="ic"><use href="#i-back"/></svg></div><div class="tt">列表页</div><div class="side right"><svg class="ic"><use href="#i-dots"/></svg></div></div>
+        <div style="background:#fff;padding:0 14px 12px;border-bottom:1px solid #f0f1f4">
+          <div class="m-search"><span class="loc"><svg class="ic" style="width:15px;height:15px"><use href="#i-loc"/></svg>北京 <svg class="ic" style="width:12px;height:12px"><use href="#i-down"/></svg></span><span class="ph"><svg class="ic" style="width:15px;height:15px;margin-right:4px;vertical-align:-2px"><use href="#i-search"/></svg>请输入目的地和关键字</span></div>
+        </div>
+        <div style="background:#fff;padding:14px 12px 0;display:flex;gap:20px;overflow-x:auto;white-space:nowrap;border-bottom:1px solid #f0f1f4">
+          <span style="font-size:15px;font-weight:700;color:#26282c;border-bottom:3px solid var(--brand);padding-bottom:9px">国内游</span>
+          <span style="font-size:14px;color:#7a8090;padding-bottom:9px">出境游</span>
+          <span style="font-size:14px;color:#7a8090;padding-bottom:9px">签证</span>
+          <span style="font-size:14px;color:#7a8090;padding-bottom:9px">邮轮</span>
+          <span style="font-size:14px;color:#7a8090;padding-bottom:9px">门票</span>
+          <span style="font-size:14px;color:#7a8090;padding-bottom:9px">酒店</span>
+          <span style="font-size:14px;color:#7a8090;padding-bottom:9px">机票</span>
+        </div>
+        <div style="background:#fff;display:flex;justify-content:space-around;padding:12px 16px;font-size:13px;border-bottom:1px solid #f0f1f4;color:#444">
+          <span style="color:var(--brand);font-weight:600;display:flex;align-items:center;gap:2px">推荐排序<svg class="ic" style="width:13px;height:13px"><use href="#i-down"/></svg></span>
+          <span style="display:flex;align-items:center;gap:2px">出游天数<svg class="ic" style="width:13px;height:13px"><use href="#i-down"/></svg></span>
+          <span style="display:flex;align-items:center;gap:4px">筛选<svg class="ic" style="width:13px;height:13px"><use href="#i-gear"/></svg></span>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:12px 14px 20px">
+          <div style="background:#fff;border-radius:12px;overflow:hidden;margin-bottom:10px;display:flex;box-shadow:var(--shadow)"><div class="photo" style="width:118px;height:112px;flex-shrink:0"><img src="assets/tibet.jpg" alt=""><div class="badge">西藏·8晚13日</div></div><div style="flex:1;padding:10px"><div style="font-size:13px;font-weight:600;line-height:1.45">金秋赞歌 圣地西藏8晚13日<br>拉萨+林芝+昌都</div><div style="margin-top:8px"><span class="ctag">众信自营</span></div><div class="px" style="font-size:16px;margin-top:8px">¥12699 <small>起/人</small></div></div></div>
+          <div style="background:#fff;border-radius:12px;overflow:hidden;margin-bottom:10px;display:flex;box-shadow:var(--shadow)"><div class="photo" style="width:118px;height:112px;flex-shrink:0"><img src="assets/xinjiang.jpg" alt=""><div class="badge">新疆·双卧19日</div></div><div style="flex:1;padding:10px"><div style="font-size:13px;font-weight:600;line-height:1.45">无敌新疆 新疆双卧19日<br>喀纳斯+伊犁环线</div><div class="px" style="font-size:16px;margin-top:20px">¥12980 <small>起/人</small></div></div></div>
+          <div style="background:#fff;border-radius:12px;overflow:hidden;margin-bottom:10px;display:flex;box-shadow:var(--shadow)"><div class="photo" style="width:118px;height:112px;flex-shrink:0"><img src="assets/chongqing.jpg" alt=""><div class="badge">重庆·双飞5日</div></div><div style="flex:1;padding:10px"><div style="font-size:13px;font-weight:600;line-height:1.45">漫游头等舱 重庆双飞5日<br>天坑三桥+龙水峡地缝</div><div class="px" style="font-size:16px;margin-top:8px">¥4380 <small>起/人</small></div></div></div>
+          <div style="background:#fff;border-radius:12px;overflow:hidden;margin-bottom:10px;display:flex;box-shadow:var(--shadow)"><div class="photo" style="width:118px;height:112px;flex-shrink:0"><img src="assets/guizhou.jpg" alt=""><div class="badge">贵州·双飞5日</div></div><div style="flex:1;padding:10px"><div style="font-size:13px;font-weight:600;line-height:1.45">尊享贵州 贵州双飞5日<br>黄果树+小七孔+西江苗寨</div><div class="px" style="font-size:16px;margin-top:8px">¥5680 <small>起/人</small></div></div></div>
+          <div style="background:#fff;border-radius:12px;overflow:hidden;display:flex;box-shadow:var(--shadow)"><div class="photo" style="width:118px;height:112px;flex-shrink:0"><img src="assets/xian.jpg" alt=""><div class="badge">陕西·3晚4日</div></div><div style="flex:1;padding:10px"><div style="font-size:13px;font-weight:600;line-height:1.45">西安私享家 陕西双高3晚4日<br>华清宫+兵马俑+钟鼓楼</div><div class="px" style="font-size:16px;margin-top:8px">¥4080 <small>起/人</small></div></div></div>
+        </div>
+      </div>
+      <div class="home-ind"><span></span></div>
+    </div>
+  </div>
+
+  <!-- 04 填写订单页 -->
+  <div class="phone-wrap">
+    <div class="phone-label"><i></i>04 · 填写订单页</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="sb-r"><svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx=".7"/><rect x="4.5" y="6" width="3" height="6" rx=".7"/><rect x="9" y="3.5" width="3" height="8.5" rx=".7"/><rect x="13.5" y="1" width="3" height="11" rx=".7"/></svg><span style="font-size:10px">5G</span><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="14" height="8" rx="2" fill="currentColor"/><path d="M23 4v4" stroke="currentColor" stroke-width="1.3"/></svg></span></div>
+        <div class="m-nav"><div class="side"><svg class="ic"><use href="#i-back"/></svg></div><div class="tt">填写订单</div><div class="side right"><svg class="ic"><use href="#i-dots"/></svg></div></div>
+        <div style="flex:1;overflow-y:auto;padding:12px 14px 80px;display:flex;flex-direction:column;gap:10px">
+          <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+            <div class="photo" style="height:110px"><img src="assets/lijiang.jpg" alt=""><div class="badge">云南·双飞8日</div></div>
+            <div style="padding:12px 14px">
+              <div style="font-size:13px;font-weight:700;line-height:1.5">丽江-香格里拉-大理-泸沽湖-玉龙雪山双飞8日游</div>
+              <div style="display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:10px;font-size:12px;color:#666"><span style="display:flex;align-items:center;gap:3px"><svg class="ic" style="width:14px;height:14px;color:#999"><use href="#i-loc"/></svg>北京出发</span><span style="display:flex;align-items:center;gap:3px"><svg class="ic" style="width:14px;height:14px;color:#999"><use href="#i-users"/></svg>2成人 0儿童</span><span style="display:flex;align-items:center;gap:3px"><svg class="ic" style="width:14px;height:14px;color:#999"><use href="#i-cal"/></svg>去 09-26</span><span style="display:flex;align-items:center;gap:3px"><svg class="ic" style="width:14px;height:14px;color:#999"><use href="#i-cal"/></svg>返 10-03</span></div>
+              <div style="margin-top:12px;padding-top:10px;border-top:1px solid #f0f1f4;display:flex;justify-content:space-between;align-items:center;font-size:13px"><span style="color:#26282c;font-weight:600">含机票 · 品质精品团（0购物）</span><span style="color:#26282c">¥1,510 <span style="color:#999;font-size:12px">× 2 人</span></span></div>
+            </div>
+          </div>
+          <div style="background:#fff;border-radius:12px;padding:14px;box-shadow:var(--shadow)">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:14px;font-weight:700">出游人信息</span><span style="font-size:12px;color:var(--ink2);display:flex;align-items:center;gap:4px">稍候提供 <span style="width:34px;height:18px;background:var(--brand);border-radius:9px;position:relative;display:inline-block"><span style="position:absolute;right:2px;top:2px;width:14px;height:14px;background:#fff;border-radius:50%"></span></span></span></div>
+            <div style="margin-top:12px;border:1px dashed #d8dbe2;border-radius:10px;text-align:center;padding:14px;color:var(--brand);font-size:13px;display:flex;align-items:center;justify-content:center;gap:5px"><svg class="ic" style="width:16px;height:16px"><use href="#i-users"/></svg>添加出游人</div>
+          </div>
+          <div style="background:#fff;border-radius:12px;padding:14px;box-shadow:var(--shadow)">
+            <div style="font-size:14px;font-weight:700;margin-bottom:4px">联系人信息</div>
+            <div style="border-bottom:1px solid #f0f1f4;padding:11px 2px;font-size:13px"><span style="color:var(--brand)">*</span> 姓名　<span style="float:right;color:#26282c">冯晨涵</span></div>
+            <div style="border-bottom:1px solid #f0f1f4;padding:11px 2px;font-size:13px"><span style="color:var(--brand)">*</span> 手机号 <span style="float:right;color:#26282c">186 0094 1160</span></div>
+            <div style="padding:11px 2px 2px;font-size:13px;color:var(--ink3)">邮箱（选填）</div>
+          </div>
+          <div style="background:#fff;border-radius:12px;padding:14px;box-shadow:var(--shadow)">
+            <div style="font-size:14px;font-weight:700;margin-bottom:6px">优惠方案</div>
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;display:flex;align-items:center;gap:6px"><svg class="ic" style="width:18px;height:18px;color:var(--gold)"><use href="#i-coin"/></svg>联通员工疗养账户</span><span style="font-size:13px"><span class="px">10,923 积分</span> <span style="color:var(--ink2)">可用 <svg class="ic" style="width:13px;height:13px;vertical-align:-2px"><use href="#i-chev"/></svg></span></span></div>
+          </div>
+          <div style="background:#fff;border-radius:12px;padding:14px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;font-weight:600">签证资料</span><svg class="ic" style="color:#b5bac4"><use href="#i-chev"/></svg></div>
+          <div style="background:#fff;border-radius:12px;padding:14px;box-shadow:var(--shadow)"><div style="font-size:14px;font-weight:700;margin-bottom:6px">备注</div><div style="color:#c3c7cf;font-size:12px;min-height:24px">请填写您的特殊需求（选填）</div></div>
+        </div>
+        <div style="position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #eef0f4;padding:10px 14px 10px 16px;display:flex;align-items:center;gap:10px">
+          <div style="flex:1"><div style="font-size:10px;color:var(--ink2)">总价</div><div class="px" style="font-size:20px">¥9,800</div></div>
+          <button style="background:var(--grad-btn);color:#fff;border:none;border-radius:22px;padding:13px 46px;font-size:16px;font-weight:600;box-shadow:0 8px 18px rgba(232,76,107,.3)">去支付</button>
+        </div>
+      </div>
+      <div class="home-ind"><span></span></div>
+    </div>
+  </div>
+
+  <!-- 05 价格结算 -->
+  <div class="phone-wrap">
+    <div class="phone-label"><i></i>05 · 确认支付页（价格明细）</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="sb-r"><svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx=".7"/><rect x="4.5" y="6" width="3" height="6" rx=".7"/><rect x="9" y="3.5" width="3" height="8.5" rx=".7"/><rect x="13.5" y="1" width="3" height="11" rx=".7"/></svg><span style="font-size:10px">5G</span><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="14" height="8" rx="2" fill="currentColor"/><path d="M23 4v4" stroke="currentColor" stroke-width="1.3"/></svg></span></div>
+        <div class="m-nav"><div class="side"><svg class="ic"><use href="#i-back"/></svg></div><div class="tt">确认支付</div><div class="side right"><svg class="ic"><use href="#i-dots"/></svg></div></div>
+        <div style="flex:1;overflow-y:auto;padding:12px 14px 80px;display:flex;flex-direction:column;gap:10px">
+          <div style="background:#fff;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)">
+            <div class="photo" style="height:110px"><img src="assets/lijiang.jpg" alt=""><div class="badge">云南·双飞8日</div></div>
+            <div style="padding:12px 14px">
+              <div style="font-size:13px;font-weight:700;line-height:1.5">丽江-香格里拉-大理-泸沽湖-玉龙雪山双飞8日游</div>
+              <div style="display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:10px;font-size:12px;color:#666"><span style="display:flex;align-items:center;gap:3px"><svg class="ic" style="width:14px;height:14px;color:#999"><use href="#i-loc"/></svg>北京出发</span><span style="display:flex;align-items:center;gap:3px"><svg class="ic" style="width:14px;height:14px;color:#999"><use href="#i-users"/></svg>2成人 0儿童</span><span style="display:flex;align-items:center;gap:3px"><svg class="ic" style="width:14px;height:14px;color:#999"><use href="#i-cal"/></svg>去 09-26</span><span style="display:flex;align-items:center;gap:3px"><svg class="ic" style="width:14px;height:14px;color:#999"><use href="#i-cal"/></svg>返 10-03</span></div>
+              <div style="margin-top:12px;padding-top:10px;border-top:1px solid #f0f1f4;display:flex;justify-content:space-between;align-items:center;font-size:13px"><span style="color:#26282c;font-weight:600">含机票 · 品质精品团（0购物）</span><span style="color:#26282c">¥1,510 <span style="color:#999;font-size:12px">× 2 人</span></span></div>
+            </div>
+          </div>
+          <div style="background:#fff;border-radius:12px;padding:14px;box-shadow:var(--shadow)">
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:14px;font-weight:700">出游人信息</span><span style="font-size:12px;color:var(--ink2);display:flex;align-items:center;gap:4px">稍候提供 <span style="width:34px;height:18px;background:var(--brand);border-radius:9px;position:relative;display:inline-block"><span style="position:absolute;right:2px;top:2px;width:14px;height:14px;background:#fff;border-radius:50%"></span></span></span></div>
+            <div style="margin-top:12px;border:1px dashed #d8dbe2;border-radius:10px;text-align:center;padding:14px;color:var(--brand);font-size:13px;display:flex;align-items:center;justify-content:center;gap:5px"><svg class="ic" style="width:16px;height:16px"><use href="#i-users"/></svg>添加出游人</div>
+          </div>
+          <div style="background:#fff;border-radius:12px;padding:14px;box-shadow:var(--shadow)">
+            <div style="font-size:14px;font-weight:700;margin-bottom:4px">联系人信息</div>
+            <div style="border-bottom:1px solid #f0f1f4;padding:11px 2px;font-size:13px"><span style="color:var(--brand)">*</span> 姓名　<span style="float:right;color:#26282c">冯晨涵</span></div>
+            <div style="border-bottom:1px solid #f0f1f4;padding:11px 2px;font-size:13px"><span style="color:var(--brand)">*</span> 手机号 <span style="float:right;color:#26282c">186 0094 1160</span></div>
+            <div style="padding:11px 2px 2px;font-size:13px;color:var(--ink3)">邮箱（选填）</div>
+          </div>
+          <div style="background:#fff;border-radius:12px;padding:14px;box-shadow:var(--shadow)">
+            <div style="font-size:14px;font-weight:700;margin-bottom:6px">优惠方案</div>
+            <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;display:flex;align-items:center;gap:6px"><svg class="ic" style="width:18px;height:18px;color:var(--gold)"><use href="#i-coin"/></svg>联通员工疗养账户</span><span style="font-size:13px"><span class="px">10,923 积分</span> <span style="color:var(--ink2)">可用 <svg class="ic" style="width:13px;height:13px;vertical-align:-2px"><use href="#i-chev"/></svg></span></span></div>
+          </div>
+          <div style="background:#fff;border-radius:12px;padding:14px;box-shadow:var(--shadow);display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px;font-weight:600">签证资料</span><svg class="ic" style="color:#b5bac4"><use href="#i-chev"/></svg></div>
+          <div style="background:#fff;border-radius:12px;padding:14px;box-shadow:var(--shadow)"><div style="font-size:14px;font-weight:700;margin-bottom:6px">备注</div><div style="color:#c3c7cf;font-size:12px;min-height:24px">请填写您的特殊需求（选填）</div></div>
+        </div>
+        <div style="position:absolute;left:0;right:0;bottom:0;top:105px;display:flex;flex-direction:column;justify-content:flex-end">
+          <div style="position:absolute;inset:0;background:rgba(20,22,28,.5)"></div>
+          <div style="position:relative;background:#fff;border-radius:18px 18px 0 0;padding:16px 18px 14px;box-shadow:0 -10px 40px rgba(0,0,0,.2)">
+            <div style="position:relative;text-align:center;font-size:15px;font-weight:700;padding-bottom:12px">价格明细<span style="position:absolute;right:0;top:0;color:#b5bac4"><svg class="ic"><use href="#i-close"/></svg></span></div>
+            <div style="font-size:13px;line-height:2.15">
+              <div style="display:flex;justify-content:space-between"><span style="color:#555">团费价格</span><span class="px">¥9,800</span></div>
+              <div style="display:flex;justify-content:space-between;color:#999;font-size:12px"><span>　成人</span><span>¥1,510 × 2 人</span></div>
+              <div style="height:1px;background:#f0f1f4;margin:6px 0"></div>
+              <div style="display:flex;justify-content:space-between;color:#555"><span>优惠券</span><span></span></div>
+              <div style="display:flex;justify-content:space-between;color:#999;font-size:12px"><span>　联通员工疗养账户</span><span><span class="px">10,923 积分 · 可用</span></span></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;margin-top:12px;padding-top:14px;border-top:1px solid #f0f1f4">
+              <div style="flex:1"><div style="font-size:10px;color:var(--ink2)">应付总额</div><div class="px" style="font-size:23px">¥5,800</div></div>
+              <div style="color:var(--ink2);font-size:12px;display:flex;align-items:center">明细<svg class="ic" style="width:14px;height:14px;transform:rotate(180deg)"><use href="#i-down"/></svg></div>
+              <button style="background:var(--grad-btn);color:#fff;border:none;border-radius:22px;padding:12px 40px;font-size:15px;font-weight:600">去支付</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="home-ind"><span></span></div>
+    </div>
+  </div>
+
+  <!-- 06 个人中心 -->
+  <div class="phone-wrap">
+    <div class="phone-label"><i></i>06 · 个人中心页（我的）</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="sb-r"><svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx=".7"/><rect x="4.5" y="6" width="3" height="6" rx=".7"/><rect x="9" y="3.5" width="3" height="8.5" rx=".7"/><rect x="13.5" y="1" width="3" height="11" rx=".7"/></svg><span style="font-size:10px">5G</span><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="14" height="8" rx="2" fill="currentColor"/><path d="M23 4v4" stroke="currentColor" stroke-width="1.3"/></svg></span></div>
+        <div class="m-nav"><div class="side"></div><div class="tt">个人中心</div><div class="side right" style="position:relative"><svg class="ic"><use href="#i-bell"/></svg><span style="position:absolute;right:-2px;top:2px;width:8px;height:8px;background:#ff4d4f;border-radius:50%;border:1.5px solid #fff"></span></div></div>
+        <div style="background:#fff;padding:16px 16px 18px;border-bottom:1px solid #f0f1f4">
+          <div style="display:flex;align-items:center;gap:14px">
+            <img src="assets/avatar.jpg" alt="" style="width:58px;height:58px;border-radius:50%;object-fit:cover;box-shadow:0 4px 14px rgba(0,0,0,.10)">
+            <div style="flex:1"><div style="font-size:17px;font-weight:700;display:flex;align-items:center;gap:7px">冯晨涵 <span style="font-size:10px;background:linear-gradient(135deg,#f6d98a,#d9a03c);color:#6b4800;border-radius:10px;padding:1px 8px;font-weight:700;flex-shrink:0">VIP</span></div><div style="font-size:12px;color:#999;margin-top:5px">工号 10012345 · 联通集团</div></div>
+            <svg class="ic" style="color:#c3c7cf"><use href="#i-chev"/></svg>
+          </div>
+        </div>
+        <div style="flex:1;overflow-y:auto;padding:12px 14px 58px;display:flex;flex-direction:column;gap:10px">
+          <div style="background:#fff;border-radius:12px;padding:16px;display:flex;box-shadow:var(--shadow)">
+            <div style="flex:1;text-align:center"><div style="font-size:20px;font-weight:800">12</div><div style="font-size:11px;color:#999;margin-top:3px">优惠券</div></div>
+            <div style="width:1px;background:#f0f1f4"></div>
+            <div style="flex:1;text-align:center"><div style="font-size:20px;font-weight:800" class="px">10,794</div><div style="font-size:11px;color:#999;margin-top:3px">可用积分</div></div>
+          </div>
+          <div style="background:#fff;border-radius:12px;padding:14px;box-shadow:var(--shadow)">
+            <div style="font-size:14px;font-weight:700;margin-bottom:12px">我的订单</div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);text-align:center">
+              <div><svg class="ic" style="width:22px;height:22px;color:var(--brand);margin:0 auto"><use href="#i-clock"/></svg><div style="font-size:11px;margin-top:5px;color:#555">待确认</div></div>
+              <div><svg class="ic" style="width:22px;height:22px;color:var(--brand);margin:0 auto"><use href="#i-wallet"/></svg><div style="font-size:11px;margin-top:5px;color:#555">待付款</div></div>
+              <div><svg class="ic" style="width:22px;height:22px;color:var(--brand);margin:0 auto"><use href="#i-bag"/></svg><div style="font-size:11px;margin-top:5px;color:#555">待出行</div></div>
+              <div><svg class="ic" style="width:22px;height:22px;color:var(--brand);margin:0 auto"><use href="#i-list"/></svg><div style="font-size:11px;margin-top:5px;color:#555">全部订单</div></div>
+            </div>
+          </div>
+          <div style="background:#fff;border-radius:12px;padding:4px 14px;box-shadow:var(--shadow)">
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);text-align:center;padding:13px 0">
+              <div><svg class="ic" style="width:20px;height:20px;color:#5b606a;margin:0 auto"><use href="#i-compass"/></svg><div style="font-size:11px;margin-top:5px;color:#555">我的定制</div></div>
+              <div><svg class="ic" style="width:20px;height:20px;color:#5b606a;margin:0 auto"><use href="#i-heart"/></svg><div style="font-size:11px;margin-top:5px;color:#555">我的收藏</div></div>
+              <div><svg class="ic" style="width:20px;height:20px;color:#5b606a;margin:0 auto"><use href="#i-clock"/></svg><div style="font-size:11px;margin-top:5px;color:#555">浏览历史</div></div>
+              <div><svg class="ic" style="width:20px;height:20px;color:#5b606a;margin:0 auto"><use href="#i-users"/></svg><div style="font-size:11px;margin-top:5px;color:#555">出行人</div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);text-align:center;padding:13px 0;border-top:1px solid #f5f6f8">
+              <div><svg class="ic" style="width:20px;height:20px;color:#5b606a;margin:0 auto"><use href="#i-pin"/></svg><div style="font-size:11px;margin-top:5px;color:#555">常用地址</div></div>
+              <div><svg class="ic" style="width:20px;height:20px;color:#5b606a;margin:0 auto"><use href="#i-receipt"/></svg><div style="font-size:11px;margin-top:5px;color:#555">发票信息</div></div>
+              <div><svg class="ic" style="width:20px;height:20px;color:#5b606a;margin:0 auto"><use href="#i-book"/></svg><div style="font-size:11px;margin-top:5px;color:#555">服务说明</div></div>
+              <div></div>
+            </div>
+          </div>
+        </div>
+        <div style="position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #eef0f4;height:56px;display:flex;align-items:center;justify-content:space-around;font-size:11px">
+          <div style="text-align:center;color:#999"><svg class="ic" style="width:21px;height:21px;margin:0 auto"><use href="#i-home"/></svg>首页</div>
+          <div style="text-align:center;color:#999"><svg class="ic" style="width:21px;height:21px;margin:0 auto"><use href="#i-cs"/></svg>客服</div>
+          <div style="text-align:center;color:var(--brand)"><svg class="ic" style="width:21px;height:21px;margin:0 auto"><use href="#i-user"/></svg>我的</div>
+        </div>
+      </div>
+      <div class="home-ind"><span></span></div>
+    </div>
+  </div>
+
+  <!-- 07 员工疗养账户 -->
+  <div class="phone-wrap">
+    <div class="phone-label"><i></i>07 · 员工疗养账户页（积点）</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar" style="background:var(--grad);color:#fff"><span>9:41</span><span class="sb-r"><svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx=".7"/><rect x="4.5" y="6" width="3" height="6" rx=".7"/><rect x="9" y="3.5" width="3" height="8.5" rx=".7"/><rect x="13.5" y="1" width="3" height="11" rx=".7"/></svg><span style="font-size:10px">5G</span><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="14" height="8" rx="2" fill="currentColor"/><path d="M23 4v4" stroke="currentColor" stroke-width="1.3"/></svg></span></div>
+        <div class="m-nav" style="background:var(--grad);color:#fff"><div class="side" style="color:#fff"><svg class="ic"><use href="#i-back"/></svg></div><div class="tt" style="color:#fff">员工疗养账户</div><div class="side right" style="color:#fff"><svg class="ic"><use href="#i-dots"/></svg></div></div>
+        <div style="background:var(--grad);padding:10px 20px 26px;color:#fff">
+          <div style="font-size:12px;opacity:.85">积分总额</div>
+          <div style="font-size:30px;font-weight:800;margin-top:4px;display:flex;align-items:baseline">¥28,493.43 <svg class="ic" style="width:18px;height:18px;margin-left:6px"><use href="#i-chev"/></svg></div>
+          <div style="display:flex;gap:26px;margin-top:12px;font-size:12px"><span>可用 ¥20,000.43</span><span>冻结 ¥8,493.00</span></div>
+          <div style="display:inline-flex;align-items:center;gap:4px;margin-top:14px;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.5);border-radius:16px;padding:5px 16px;font-size:12px"><svg class="ic" style="width:14px;height:14px"><use href="#i-book"/></svg>使用规则</div>
+        </div>
+        <div style="flex:1;overflow-y:auto;background:#fff">
+          <div style="display:flex;gap:22px;padding:12px 20px;font-size:13px;border-bottom:1px solid #f0f1f4">
+            <span style="color:#26282c;font-weight:700;border-bottom:2px solid var(--brand);padding-bottom:10px">全部</span>
+            <span style="color:#999">发放</span><span style="color:#999">支付</span><span style="color:#999">退款</span><span style="color:#999">过期</span><span style="color:#999">调账</span>
+          </div>
+          <div style="padding:12px 16px">
+            <div style="border-bottom:1px dashed #e6e8ee;padding:13px 2px;display:flex;justify-content:space-between;align-items:center">
+              <div><div style="font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px">积分发放 <span style="font-size:10px;color:var(--ok);background:#eaf8ee;border-radius:8px;padding:1px 8px">成功</span></div><div style="font-size:11px;color:#aaa;margin-top:4px">2026-09-01 10:24 · 年度疗养额度</div></div>
+              <div style="font-size:15px;font-weight:700;color:#2eae63">+¥8,000.00</div>
+            </div>
+            <div style="border-bottom:1px dashed #e6e8ee;padding:13px 2px;display:flex;justify-content:space-between;align-items:center">
+              <div><div style="font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px">消费支付 <span style="font-size:10px;color:#fff;background:var(--brand);border-radius:8px;padding:1px 8px">完成</span></div><div style="font-size:11px;color:#aaa;margin-top:4px">2026-08-18 14:02 · 订单 20260818201</div></div>
+              <div style="font-size:15px;font-weight:700">-¥4,506.57</div>
+            </div>
+            <div style="border-bottom:1px dashed #e6e8ee;padding:13px 2px;display:flex;justify-content:space-between;align-items:center">
+              <div><div style="font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px">消费支付 <span style="font-size:10px;color:#fff;background:var(--brand);border-radius:8px;padding:1px 8px">完成</span></div><div style="font-size:11px;color:#aaa;margin-top:4px">2026-08-15 09:40 · 订单 20260815123</div></div>
+              <div style="font-size:15px;font-weight:700">-¥2,188.00</div>
+            </div>
+            <div style="border-bottom:1px dashed #e6e8ee;padding:13px 2px;display:flex;justify-content:space-between;align-items:center">
+              <div><div style="font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px">积分发放 <span style="font-size:10px;color:var(--ok);background:#eaf8ee;border-radius:8px;padding:1px 8px">成功</span></div><div style="font-size:11px;color:#aaa;margin-top:4px">2026-08-10 16:20 · 上季度结转</div></div>
+              <div style="font-size:15px;font-weight:700;color:#2eae63">+¥12,000.00</div>
+            </div>
+            <div style="border-bottom:1px dashed #e6e8ee;padding:13px 2px;display:flex;justify-content:space-between;align-items:center">
+              <div><div style="font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px">订单退款 <span style="font-size:10px;color:var(--warn);background:#fdf3e1;border-radius:8px;padding:1px 8px">进行中</span></div><div style="font-size:11px;color:#aaa;margin-top:4px">2026-08-02 09:15 · 订单 20260802908</div></div>
+              <div style="font-size:15px;font-weight:700;color:#2eae63">+¥1,000.00</div>
+            </div>
+            <div style="border-bottom:1px dashed #e6e8ee;padding:13px 2px;display:flex;justify-content:space-between;align-items:center">
+              <div><div style="font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px">积点过期 <span style="font-size:10px;color:#999;background:#f0f1f4;border-radius:8px;padding:1px 8px">已过期</span></div><div style="font-size:11px;color:#aaa;margin-top:4px">2026-07-31 23:59 · 2025 年度额度</div></div>
+              <div style="font-size:15px;font-weight:700;color:#b5bac4">-¥900.00</div>
+            </div>
+            <div style="border-bottom:1px dashed #e6e8ee;padding:13px 2px;display:flex;justify-content:space-between;align-items:center">
+              <div><div style="font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px">积分调账 <span style="font-size:10px;color:#4a7fd4;background:#eaf0fb;border-radius:8px;padding:1px 8px">已到账</span></div><div style="font-size:11px;color:#aaa;margin-top:4px">2026-07-22 11:08 · 差价补充</div></div>
+              <div style="font-size:15px;font-weight:700;color:#2eae63">+¥500.00</div>
+            </div>
+            <div style="padding:13px 2px;display:flex;justify-content:space-between;align-items:center">
+              <div><div style="font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px">消费支付 <span style="font-size:10px;color:#fff;background:var(--brand);border-radius:8px;padding:1px 8px">完成</span></div><div style="font-size:11px;color:#aaa;margin-top:4px">2026-07-15 15:30 · 订单 20260715288</div></div>
+              <div style="font-size:15px;font-weight:700">-¥3,680.00</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="home-ind"><span></span></div>
+    </div>
+  </div>
+
+  <!-- 08 客服中心 -->
+  <div class="phone-wrap">
+    <div class="phone-label"><i></i>08 · 客服中心页（在线客服）</div>
+    <div class="phone">
+      <div class="notch"></div>
+      <div class="screen">
+        <div class="statusbar"><span>9:41</span><span class="sb-r"><svg width="17" height="12" viewBox="0 0 17 12" fill="currentColor"><rect x="0" y="8" width="3" height="4" rx=".7"/><rect x="4.5" y="6" width="3" height="6" rx=".7"/><rect x="9" y="3.5" width="3" height="8.5" rx=".7"/><rect x="13.5" y="1" width="3" height="11" rx=".7"/></svg><span style="font-size:10px">5G</span><svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="14" height="8" rx="2" fill="currentColor"/><path d="M23 4v4" stroke="currentColor" stroke-width="1.3"/></svg></span></div>
+        <div class="m-nav"><div class="side"><svg class="ic"><use href="#i-back"/></svg></div><div class="tt">专属客服</div><div class="side right"><svg class="ic"><use href="#i-dots"/></svg></div></div>
+        <div style="flex:1;overflow-y:auto;padding:16px 14px;background:#f0f1f5">
+          <div style="text-align:center;font-size:11px;color:#b5bac4;margin:2px 0 14px">今天 14:32</div>
+          <div style="display:flex;gap:10px;margin-bottom:14px">
+            <div class="avatar" style="width:40px;height:40px;border-radius:50%;font-size:16px;background:#5b7cf5;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">T</div>
+            <div><div style="font-size:11px;color:#999;margin-bottom:4px">专属客服 · 小T</div><div style="background:#fff;border-radius:4px 14px 14px 14px;padding:10px 12px;font-size:13px;display:inline-block;line-height:1.5">您好，欢迎咨询联通员工疗休养服务，我是您的专属客服小T，请问有什么可以帮您？</div></div>
+          </div>
+          <div style="display:flex;gap:10px;margin-bottom:14px;justify-content:flex-end">
+            <div><div style="text-align:right;font-size:11px;color:#999;margin-bottom:4px">我 · 14:32</div><div style="background:#c3d0ff;border-radius:14px 4px 14px 14px;padding:10px 12px;font-size:13px">我想咨询一下订单退款进度</div></div>
+            <img src="assets/avatar.jpg" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0">
+          </div>
+          <div style="display:flex;gap:10px;margin-bottom:14px">
+            <div class="avatar" style="width:40px;height:40px;border-radius:50%;font-size:16px;background:#5b7cf5;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">T</div>
+            <div><div style="font-size:11px;color:#999;margin-bottom:4px">专属客服 · 小T</div><div style="background:#fff;border-radius:4px 14px 14px 14px;padding:10px 12px;font-size:13px;display:inline-block;line-height:1.5">好的，请提供您的订单编号，我为您查询退款进度。</div></div>
+          </div>
+          <div style="display:flex;gap:10px;margin-bottom:14px;justify-content:flex-end">
+            <div><div style="text-align:right;font-size:11px;color:#999;margin-bottom:4px">我 · 14:33</div><div style="background:#c3d0ff;border-radius:14px 4px 14px 14px;padding:10px 12px;font-size:13px">订单号 20260802908</div></div>
+            <img src="assets/avatar.jpg" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0">
+          </div>
+          <div style="display:flex;gap:10px;margin-bottom:14px">
+            <div class="avatar" style="width:40px;height:40px;border-radius:50%;font-size:16px;background:#5b7cf5;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">T</div>
+            <div style="max-width:272px"><div style="font-size:11px;color:#999;margin-bottom:4px">专属客服 · 小T</div><div style="background:#fff;border-radius:4px 14px 14px 14px;padding:10px 12px;font-size:13px;line-height:1.5;display:inline-block">已为您查询到退款进度：</div>
+              <div style="background:#fff;border-radius:12px;margin-top:6px;padding:12px 14px;box-shadow:0 2px 8px rgba(0,0,0,.05)">
+                <div style="font-size:13px;font-weight:700;margin-bottom:12px">订单退款进度</div>
+                <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px"><div style="width:20px;height:20px;background:var(--ok);border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg class="ic" style="width:11px;height:11px"><use href="#i-check"/></svg></div><div><div style="font-size:12px;font-weight:600">退款申请已受理</div><div style="font-size:11px;color:#999;margin-top:2px">08-02 09:15 已提交</div></div></div>
+                <div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:14px"><div style="width:20px;height:20px;background:var(--ok);border-radius:50%;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg class="ic" style="width:11px;height:11px"><use href="#i-check"/></svg></div><div><div style="font-size:12px;font-weight:600">退款审核已通过</div><div style="font-size:11px;color:#999;margin-top:2px">08-03 18:20 审核完成</div></div></div>
+                <div style="display:flex;align-items:flex-start;gap:10px"><div style="width:20px;height:20px;background:#fff;border:2px solid var(--warn);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center"></div><div><div style="font-size:12px;font-weight:600;color:#e5842c">退款打款中</div><div style="font-size:11px;color:#999;margin-top:2px">预计 3-5 个工作日到账</div></div></div>
+              </div>
+              <div style="background:#fff;border-radius:4px 14px 14px 14px;padding:10px 12px;font-size:13px;line-height:1.5;margin-top:6px;display:inline-block">退款金额 ¥1,000.00 将原路退回您的疗养积点账户，到账后我会第一时间通知您。</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;margin-bottom:14px;justify-content:flex-end">
+            <div><div style="text-align:right;font-size:11px;color:#999;margin-bottom:4px">我 · 14:35</div><div style="background:#c3d0ff;border-radius:14px 4px 14px 14px;padding:10px 12px;font-size:13px">好的，谢谢～</div></div>
+            <img src="assets/avatar.jpg" alt="" style="width:40px;height:40px;border-radius:50%;object-fit:cover;flex-shrink:0">
+          </div>
+          <div style="display:flex;gap:10px;margin-bottom:14px">
+            <div class="avatar" style="width:40px;height:40px;border-radius:50%;font-size:16px;background:#5b7cf5;color:#fff;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0">T</div>
+            <div><div style="font-size:11px;color:#999;margin-bottom:4px">专属客服 · 小T</div><div style="background:#fff;border-radius:4px 14px 14px 14px;padding:10px 12px;font-size:13px;display:inline-block;line-height:1.5">不客气，如有其他问题随时找我～ 祝您疗休养愉快！</div></div>
+          </div>
+        </div>
+        <div style="background:#fff;border-top:1px solid #eef0f4;padding:10px 14px">
+          <div style="display:flex;gap:8px;margin-bottom:8px;overflow:hidden">
+            <span style="border:1px solid #e2e4ea;border-radius:14px;padding:4px 12px;font-size:11px;color:#555;white-space:nowrap;display:flex;align-items:center;gap:4px"><svg class="ic" style="width:13px;height:13px"><use href="#i-headset"/></svg>人工客服</span>
+            <span style="border:1px solid #e2e4ea;border-radius:14px;padding:4px 12px;font-size:11px;color:#555;white-space:nowrap;display:flex;align-items:center;gap:4px"><svg class="ic" style="width:13px;height:13px"><use href="#i-list"/></svg>咨询订单问题</span>
+            <span style="border:1px solid #e2e4ea;border-radius:14px;padding:4px 12px;font-size:11px;color:#555;white-space:nowrap;display:flex;align-items:center;gap:4px"><svg class="ic" style="width:13px;height:13px;transform:scaleX(-1)"><use href="#i-back"/></svg>申请退款</span>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <div style="flex:1;background:#f4f5f8;border-radius:20px;padding:9px 14px;font-size:13px;color:#b0b5be">请输入你的问题</div>
+            <div style="background:#8fa3ff;color:#fff;border-radius:16px;padding:8px 18px;font-size:13px;font-weight:600">发送</div>
+          </div>
+        </div>
+      </div>
+      <div class="home-ind"><span></span></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ============ PC 端 ============ -->
+<div class="section"><div class="bar"><h2>PC 端页面</h2></div><div class="sub">Web 网站端 · 1200px 桌面宽屏</div></div>
+
+<div class="gallery" style="flex-direction:column">
+
+  <!-- 09 PC首页 -->
+  <div class="pc-wrap">
+    <div class="pc-label"><i></i>09 · PC 首页（频道页）</div>
+    <div class="pc-frame">
+      <div class="pc-browser"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><div class="addr">https://liaoYang.chinaunicom.cn/home</div></div>
+      <div class="pc-body">
+        <div class="pctop"><div class="pctop-bar">
+          <div class="logo"><span class="cn">联</span>员工疗休养平台</div>
+          <nav><a class="on" href="#">首页</a><a href="#">酒店</a><a href="#">机票</a><a href="#">跟团游</a><a href="#">火车票</a><a href="#">门票</a><a href="#">签证</a></nav>
+          <div class="user"><span style="display:flex;align-items:center;gap:5px"><svg class="ic" style="width:16px;height:16px"><use href="#i-headset"/></svg>7×24 客服</span><span class="pt"><svg class="ic" style="width:14px;height:14px;vertical-align:-2px"><use href="#i-coin"/></svg> 我的积点 ¥20,000</span><img src="assets/avatar.jpg" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid #ffd7df;flex-shrink:0"></div>
+        </div></div>
+        <div class="container">
+          <div class="photo" style="height:300px;border-radius:16px;box-shadow:var(--shadow)"><img src="assets/banner_pc.jpg" alt=""><div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,22,28,.55),rgba(20,22,28,0))"></div><div style="position:absolute;left:46px;top:48px;color:#fff"><div style="font-size:34px;font-weight:800">中国联通 员工疗养专区</div><div style="font-size:16px;opacity:.94;margin-top:12px">酒店 · 机票 · 跟团游 · 火车票 · 门票 · 签证，一站式自主选订</div><div style="display:flex;gap:12px;margin-top:28px"><div class="pc-btn" style="background:#fff;color:#e84c6b">员工疗养 ›</div><div style="border:1px solid rgba(255,255,255,.8);border-radius:22px;padding:10px 26px;font-size:15px;display:flex;align-items:center;gap:5px"><svg class="ic" style="width:16px;height:16px"><use href="#i-coin"/></svg>查看积点账户</div></div></div></div>
+          <div style="display:grid;grid-template-columns:repeat(8,1fr);gap:14px;margin-top:22px">
+            <div class="pc-card" style="text-align:center;padding:20px 8px;cursor:pointer"><div class="chip" style="background:#e7f4ec;color:#3aa569"><svg class="ic" style="width:26px;height:26px"><use href="#i-hotel"/></svg></div><div style="font-size:14px;font-weight:600;margin-top:8px">酒店</div></div>
+            <div class="pc-card" style="text-align:center;padding:20px 8px;cursor:pointer"><div class="chip" style="background:#eaf0fb;color:#4a7fd4"><svg class="ic" style="width:26px;height:26px"><use href="#i-plane"/></svg></div><div style="font-size:14px;font-weight:600;margin-top:8px">机票</div></div>
+            <div class="pc-card" style="text-align:center;padding:20px 8px;cursor:pointer"><div class="chip" style="background:#fdf0e2;color:#e5944a"><svg class="ic" style="width:26px;height:26px"><use href="#i-bus"/></svg></div><div style="font-size:14px;font-weight:600;margin-top:8px">跟团游</div></div>
+            <div class="pc-card" style="text-align:center;padding:20px 8px;cursor:pointer"><div class="chip" style="background:#f0ecfb;color:#8a6dd8"><svg class="ic" style="width:26px;height:26px"><use href="#i-train"/></svg></div><div style="font-size:14px;font-weight:600;margin-top:8px">火车票</div></div>
+            <div class="pc-card" style="text-align:center;padding:20px 8px;cursor:pointer"><div class="chip" style="background:#fdf5e2;color:#d9a03c"><svg class="ic" style="width:26px;height:26px"><use href="#i-ticket"/></svg></div><div style="font-size:14px;font-weight:600;margin-top:8px">门票</div></div>
+            <div class="pc-card" style="text-align:center;padding:20px 8px;cursor:pointer"><div class="chip" style="background:#e4f3f5;color:#3ba4b8"><svg class="ic" style="width:26px;height:26px"><use href="#i-ship"/></svg></div><div style="font-size:14px;font-weight:600;margin-top:8px">游轮</div></div>
+            <div class="pc-card" style="text-align:center;padding:20px 8px;cursor:pointer"><div class="chip" style="background:#fcecef;color:#dc6b84"><svg class="ic" style="width:26px;height:26px"><use href="#i-passport"/></svg></div><div style="font-size:14px;font-weight:600;margin-top:8px">签证</div></div>
+            <div class="pc-card" style="text-align:center;padding:20px 8px;cursor:pointer"><div class="chip" style="background:#eef0f4;color:#5b606a"><svg class="ic" style="width:26px;height:26px"><use href="#i-grid"/></svg></div><div style="font-size:14px;font-weight:600;margin-top:8px">全部服务</div></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:20px">
+            <div style="border-radius:16px;background:linear-gradient(120deg,#2b2b40,#3d3d5e);padding:26px;color:#fff;box-shadow:var(--shadow)">
+              <div style="font-size:14px;opacity:.85;display:flex;align-items:center;gap:8px"><svg class="ic" style="width:18px;height:18px;color:#d9a03c"><use href="#i-coin"/></svg>我的疗养积点</div>
+              <div style="font-size:34px;font-weight:800;margin-top:10px">¥20,000.43</div>
+              <div style="display:flex;gap:10px;margin-top:16px;font-size:12px;opacity:.85"><span>可用 ¥20,000.43</span><span>·</span><span>即将过期 ¥900.00</span></div>
+            </div>
+            <div class="pc-card">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px"><span class="sub-t" style="font-size:17px"><span style="color:var(--brand)">●</span> 热门推荐</span><span style="font-size:12px;color:var(--brand)">查看全部 ›</span></div>
+              <div style="display:flex;gap:14px">
+                <div style="flex:1;border-radius:10px;overflow:hidden;border:1px solid #f0f1f4"><div class="photo" style="height:92px"><img src="assets/wuzhen.jpg" alt=""></div><div style="padding:9px 10px"><div style="font-size:12px;font-weight:600">心泊乌镇 江浙</div><div class="px" style="font-size:14px;margin-top:3px">¥3299<small>起</small></div></div></div>
+                <div style="flex:1;border-radius:10px;overflow:hidden;border:1px solid #f0f1f4"><div class="photo" style="height:92px"><img src="assets/hulunbeier.jpg" alt=""></div><div style="padding:9px 10px"><div style="font-size:12px;font-weight:600">呼伦贝尔</div><div class="px" style="font-size:14px;margin-top:3px">¥6980<small>起</small></div></div></div>
+                <div style="flex:1;border-radius:10px;overflow:hidden;border:1px solid #f0f1f4"><div class="photo" style="height:92px"><img src="assets/erhai.jpg" alt=""></div><div style="padding:9px 10px"><div style="font-size:12px;font-weight:600">洱海 云南8日</div><div class="px" style="font-size:14px;margin-top:3px">¥9580<small>起</small></div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="photo" style="margin-top:20px;height:120px;border-radius:16px;box-shadow:var(--shadow)"><img src="assets/banner_pc.jpg" alt=""><div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(217,160,60,.92),rgba(217,160,60,.25))"></div><div style="position:absolute;left:40px;top:26px;color:#fff"><div style="font-size:24px;font-weight:800">大美中国</div><div style="font-size:14px;margin-top:6px">员工疗养 · 尽享 95 折优惠</div></div></div>
+        </div>
+        <div class="pc-footer">联通数字科技有限公司 · 员工疗休养服务平台</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 PC产品列表 -->
+  <div class="pc-wrap">
+    <div class="pc-label"><i></i>10 · PC 产品列表页（国内游）</div>
+    <div class="pc-frame">
+      <div class="pc-browser"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><div class="addr">https://liaoYang.chinaunicom.cn/tour/domestic</div></div>
+      <div class="pc-body">
+        <div class="pctop"><div class="pctop-bar">
+          <div class="logo"><span class="cn">联</span>员工疗休养平台</div>
+          <nav><a href="#">首页</a><a href="#">酒店</a><a href="#">机票</a><a class="on" href="#">跟团游</a><a href="#">火车票</a><a href="#">门票</a><a href="#">签证</a></nav>
+          <div class="user"><img src="assets/avatar.jpg" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid #ffd7df;flex-shrink:0"></div>
+        </div></div>
+        <div class="container">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;font-size:13px"><span style="color:#999">首页</span><svg class="ic" style="width:12px;height:12px;color:#d0d4da"><use href="#i-chev"/></svg><span style="color:#333">跟团游</span><svg class="ic" style="width:12px;height:12px;color:#d0d4da"><use href="#i-chev"/></svg><span style="color:var(--brand);font-weight:600">国内游</span></div>
+          <div style="display:flex;gap:32px;margin:0 0 18px;font-size:16px;border-bottom:1px solid #eef0f4">
+            <span style="color:var(--brand);font-weight:700;border-bottom:3px solid var(--brand);padding-bottom:11px">国内游</span>
+            <span style="color:#7a8090;padding-bottom:11px">出境游</span>
+            <span style="color:#7a8090;padding-bottom:11px">签证</span>
+            <span style="color:#7a8090;padding-bottom:11px">邮轮</span>
+            <span style="color:#7a8090;padding-bottom:11px">门票</span>
+            <span style="color:#7a8090;padding-bottom:11px">酒店</span>
+            <span style="color:#7a8090;padding-bottom:11px">机票</span>
+          </div>
+          <div style="display:grid;grid-template-columns:250px 1fr;gap:16px;align-items:start">
+            <div class="pc-card">
+              <div style="font-size:16px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:6px"><svg class="ic"><use href="#i-gear"/></svg>筛选条件</div>
+              <div style="font-size:13px;font-weight:600;margin:16px 0 8px">目的地</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;font-size:12px">
+                <span style="background:#ffeef2;color:var(--brand);border:1px solid #ffd7df;border-radius:14px;padding:4px 13px">全部</span>
+                <span style="background:#f5f6f8;color:#555;border-radius:14px;padding:4px 13px">西藏</span>
+                <span style="background:#f5f6f8;color:#555;border-radius:14px;padding:4px 13px">新疆</span>
+                <span style="background:#f5f6f8;color:#555;border-radius:14px;padding:4px 13px">重庆</span>
+                <span style="background:#f5f6f8;color:#555;border-radius:14px;padding:4px 13px">贵州</span>
+                <span style="background:#f5f6f8;color:#555;border-radius:14px;padding:4px 13px">云南</span>
+              </div>
+              <div style="font-size:13px;font-weight:600;margin:18px 0 8px">出游天数</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;font-size:12px">
+                <span style="background:#f5f6f8;color:#555;border-radius:14px;padding:4px 13px">5 日以下</span>
+                <span style="background:#f5f6f8;color:#555;border-radius:14px;padding:4px 13px">5-10 日</span>
+                <span style="background:#ffeef2;color:var(--brand);border:1px solid #ffd7df;border-radius:14px;padding:4px 13px">10 日以上</span>
+              </div>
+              <div style="font-size:13px;font-weight:600;margin:18px 0 8px">价格区间</div>
+              <div style="display:flex;flex-wrap:wrap;gap:8px;font-size:12px">
+                <span style="background:#f5f6f8;color:#555;border-radius:14px;padding:4px 13px">¥0-3000</span>
+                <span style="background:#f5f6f8;color:#555;border-radius:14px;padding:4px 13px">¥3000-6000</span>
+                <span style="background:#f5f6f8;color:#555;border-radius:14px;padding:4px 13px">¥6000-10000</span>
+                <span style="background:#f5f6f8;color:#555;border-radius:14px;padding:4px 13px">¥10000+</span>
+              </div>
+              <div style="margin-top:22px"><div class="pc-btn" style="width:100%">确定筛选</div></div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:14px">
+              <div class="pc-card" style="display:flex;gap:18px;padding:16px">
+                <div class="photo" style="width:280px;height:190px;border-radius:12px;flex-shrink:0"><img src="assets/tibet.jpg" alt=""><div class="badge">西藏 · 8晚13日</div></div>
+                <div style="flex:1;display:flex;flex-direction:column">
+                  <div style="font-size:18px;font-weight:700;line-height:1.4">金秋赞歌 圣地西藏8晚13日 · 拉萨+林芝+昌都</div>
+                  <div style="margin-top:10px"><span class="ctag">众信自营</span><span style="font-size:12px;color:#666;margin-left:10px">全程含餐 · 0购物 · 资深向导</span></div>
+                  <div style="margin-top:14px;font-size:12px;color:#999;line-height:1.7">布达拉宫 / 大昭寺 / 巴松措 / 雅鲁藏布大峡谷 / 纳木错</div>
+                  <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between"><div class="px" style="font-size:24px">¥12,699 <small style="font-size:12px">起/人</small></div><div class="pc-btn">立即预订</div></div>
+                </div>
+              </div>
+              <div class="pc-card" style="display:flex;gap:18px;padding:16px">
+                <div class="photo" style="width:280px;height:190px;border-radius:12px;flex-shrink:0"><img src="assets/xinjiang.jpg" alt=""><div class="badge">新疆 · 双卧19日</div></div>
+                <div style="flex:1;display:flex;flex-direction:column">
+                  <div style="font-size:18px;font-weight:700;line-height:1.4">无敌新疆 新疆双卧19日</div>
+                  <div style="margin-top:10px;font-size:12px;color:#666">喀纳斯 + 伊犁 + 吐鲁番环线</div>
+                  <div style="margin-top:14px;font-size:12px;color:#999;line-height:1.7">喀纳斯湖 / 那拉提草原 / 赛里木湖 / 天山天池 / 火焰山</div>
+                  <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between"><div class="px" style="font-size:24px">¥12,980 <small style="font-size:12px">起/人</small></div><div class="pc-btn">立即预订</div></div>
+                </div>
+              </div>
+              <div class="pc-card" style="display:flex;gap:18px;padding:16px">
+                <div class="photo" style="width:280px;height:190px;border-radius:12px;flex-shrink:0"><img src="assets/chongqing.jpg" alt=""><div class="badge">重庆 · 双飞5日</div></div>
+                <div style="flex:1;display:flex;flex-direction:column">
+                  <div style="font-size:18px;font-weight:700;line-height:1.4">漫游头等舱 重庆双飞5日 · 天坑三桥+龙水峡地缝</div>
+                  <div style="margin-top:10px;font-size:12px;color:#666">洪崖洞 · 仙女山 · 乌江画廊</div>
+                  <div style="margin-top:14px;font-size:12px;color:#999;line-height:1.7">武隆天坑 / 龙水峡地缝 / 磁器口 / 解放碑 / 长江索道</div>
+                  <div style="margin-top:auto;display:flex;align-items:center;justify-content:space-between"><div class="px" style="font-size:24px">¥4,380 <small style="font-size:12px">起/人</small></div><div class="pc-btn">立即预订</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pc-footer">联通数字科技有限公司 · 员工疗休养服务平台</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 11 PC填写订单 -->
+  <div class="pc-wrap">
+    <div class="pc-label"><i></i>11 · PC 填写订单页（含价格明细）</div>
+    <div class="pc-frame">
+      <div class="pc-browser"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><div class="addr">https://liaoYang.chinaunicom.cn/order/confirm</div></div>
+      <div class="pc-body">
+        <div class="container">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;font-size:13px"><span style="color:#999">首页</span><svg class="ic" style="width:12px;height:12px;color:#d0d4da"><use href="#i-chev"/></svg><span style="color:#333">跟团游</span><svg class="ic" style="width:12px;height:12px;color:#d0d4da"><use href="#i-chev"/></svg><span style="color:var(--brand);font-weight:600">填写订单</span></div>
+          <div style="display:grid;grid-template-columns:1fr 350px;gap:16px;align-items:start">
+            <div style="display:flex;flex-direction:column;gap:16px">
+              <div class="pc-card" style="overflow:hidden;padding:0">
+                <div class="photo" style="height:150px"><img src="assets/lijiang.jpg" alt=""><div class="badge">云南 · 双飞8日</div></div>
+                <div style="padding:16px 20px"><div style="font-size:18px;font-weight:700">丽江-香格里拉-大理-泸沽湖-玉龙雪山双飞8日游 · 12人团/0购物/含向导</div><div style="display:flex;gap:26px;margin-top:14px;font-size:13px;color:#666"><span style="display:flex;align-items:center;gap:4px"><svg class="ic" style="width:15px;height:15px;color:#999"><use href="#i-loc"/></svg>北京出发</span><span style="display:flex;align-items:center;gap:4px"><svg class="ic" style="width:15px;height:15px;color:#999"><use href="#i-users"/></svg>2成人 0儿童</span><span style="display:flex;align-items:center;gap:4px"><svg class="ic" style="width:15px;height:15px;color:#999"><use href="#i-cal"/></svg>去 2026/09/26</span><span style="display:flex;align-items:center;gap:4px"><svg class="ic" style="width:15px;height:15px;color:#999"><use href="#i-cal"/></svg>返 2026/10/03</span></div><div style="margin-top:14px;padding-top:12px;border-top:1px solid #f0f1f4;display:flex;justify-content:space-between;align-items:center;font-size:14px"><span style="color:#26282c;font-weight:600">含机票 · 品质精品团（0购物）</span><span style="color:#26282c">¥1,510 <span style="color:#999;font-size:13px">× 2 人</span></span></div></div>
+              </div>
+              <div class="pc-card">
+                <div style="font-size:16px;font-weight:700;margin-bottom:12px">出游人信息 <span style="font-size:12px;color:#999;font-weight:400">（实名制）</span></div>
+                <div style="border:1px dashed #d8dbe2;border-radius:10px;padding:22px;text-align:center;color:var(--brand);font-size:14px;display:flex;align-items:center;justify-content:center;gap:6px"><svg class="ic" style="width:18px;height:18px"><use href="#i-users"/></svg>添加出游人</div>
+              </div>
+              <div class="pc-card">
+                <div style="font-size:16px;font-weight:700;margin-bottom:14px">联系人信息</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
+                  <div><div style="font-size:12px;color:#555;margin-bottom:6px"><span style="color:var(--brand)">*</span> 姓名</div><div style="border:1px solid #e2e4ea;border-radius:10px;padding:11px 14px;font-size:14px">冯晨涵</div></div>
+                  <div><div style="font-size:12px;color:#555;margin-bottom:6px"><span style="color:var(--brand)">*</span> 手机号</div><div style="border:1px solid #e2e4ea;border-radius:10px;padding:11px 14px;font-size:14px">186 0094 1160</div></div>
+                </div>
+                <div style="margin-top:16px"><div style="font-size:12px;color:#555;margin-bottom:6px">邮箱（选填）</div><div style="border:1px solid #e2e4ea;border-radius:10px;padding:11px 14px;font-size:14px;color:#b5bac4">name@chinaunicom.cn</div></div>
+              </div>
+              <div class="pc-card"><div style="font-size:16px;font-weight:700;margin-bottom:12px">备注</div><div style="border:1px solid #e2e4ea;border-radius:10px;padding:11px 14px;font-size:13px;color:#c3c7cf;min-height:44px">请填写您的特殊需求（选填）</div></div>
+            </div>
+            <div class="pc-card" style="position:sticky;top:20px">
+              <div style="font-size:16px;font-weight:700;margin-bottom:14px">价格明细</div>
+              <div style="font-size:13px;line-height:2.2">
+                <div style="display:flex;justify-content:space-between"><span style="color:#555">团费价格</span><span class="px">¥9,800</span></div>
+                <div style="display:flex;justify-content:space-between;color:#999;font-size:12px"><span>　成人</span><span>¥1,510 × 2 人</span></div>
+                <div style="height:1px;background:#f0f1f4;margin:8px 0"></div>
+                <div style="display:flex;justify-content:space-between;color:#555"><span>优惠券</span><span></span></div>
+                <div style="display:flex;justify-content:space-between;color:#999;font-size:12px"><span>　联通员工疗养账户</span><span><span class="px">10,923 积分可用</span></span></div>
+                <div style="height:1px;background:#f0f1f4;margin:8px 0"></div>
+                <div style="display:flex;justify-content:space-between;font-size:12px;color:#666"><span>积点抵扣</span><span style="color:var(--brand);font-weight:700">- ¥4,000</span></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-top:14px;padding-top:14px;border-top:1px solid #f0f1f4"><span style="font-size:13px;color:#555">应付总额</span><span class="px" style="font-size:26px">¥5,800</span></div>
+              <div style="margin-top:16px;display:flex;align-items:center;gap:8px;font-size:12px;color:#999"><span style="width:16px;height:16px;background:var(--brand);border-radius:4px;color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg class="ic" style="width:10px;height:10px"><use href="#i-check"/></svg></span>我已阅读并同意《预订须知》及《合同条款》</div>
+              <div style="margin-top:14px;display:flex;gap:10px"><div class="pc-btn ghost" style="flex:1">返回修改</div><div class="pc-btn" style="flex:1">提交订单</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="pc-footer">联通数字科技有限公司 · 员工疗休养服务平台</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 12 PC我的账户 -->
+  <div class="pc-wrap">
+    <div class="pc-label"><i></i>12 · PC 我的账户（个人中心 + 积点账户）</div>
+    <div class="pc-frame">
+      <div class="pc-browser"><span class="dot" style="background:#ff5f57"></span><span class="dot" style="background:#febc2e"></span><span class="dot" style="background:#28c840"></span><div class="addr">https://liaoYang.chinaunicom.cn/member</div></div>
+      <div class="pc-body">
+        <div class="pctop"><div class="pctop-bar">
+          <div class="logo"><span class="cn">联</span>员工疗休养平台</div>
+          <nav><a href="#">首页</a><a href="#">酒店</a><a href="#">机票</a><a href="#">跟团游</a><a href="#">火车票</a><a href="#">门票</a><a href="#">签证</a></nav>
+          <div class="user"><span style="position:relative;display:inline-flex;cursor:pointer"><svg class="ic" style="width:20px;height:20px;color:#555"><use href="#i-bell"/></svg><span style="position:absolute;right:-1px;top:-2px;width:8px;height:8px;background:#ff4d4f;border-radius:50%;border:1.5px solid #fff"></span></span><img src="assets/avatar.jpg" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid #ffd7df;flex-shrink:0"></div>
+        </div></div>
+        <div class="container">
+          <div style="display:grid;grid-template-columns:280px 1fr;gap:16px;align-items:start">
+            <div class="pc-card" style="padding:0;overflow:hidden">
+              <div style="padding:22px 20px;background:#fff;border-bottom:1px solid #f0f1f4;display:flex;align-items:center;gap:12px">
+                <img src="assets/avatar.jpg" alt="" style="width:52px;height:52px;border-radius:50%;object-fit:cover;box-shadow:0 4px 14px rgba(0,0,0,.08);flex-shrink:0">
+                <div style="flex:1"><div style="font-size:15px;font-weight:700;display:flex;align-items:center;gap:7px">冯晨涵 <span style="font-size:10px;background:linear-gradient(135deg,#f6d98a,#d9a03c);color:#6b4800;border-radius:10px;padding:1px 8px;font-weight:700;flex-shrink:0">VIP</span></div><div style="font-size:12px;color:#999;margin-top:2px">工号 10012345 · 联通集团</div></div>
+                <svg class="ic" style="color:#c3c7cf;width:16px;height:16px"><use href="#i-chev"/></svg>
+              </div>
+              <div style="padding:10px 0">
+                <div style="padding:13px 22px;font-size:14px;background:#ffeef2;color:var(--brand);font-weight:600;border-left:3px solid var(--brand);display:flex;align-items:center;gap:10px"><svg class="ic" style="width:18px;height:18px"><use href="#i-coin"/></svg>账户概览</div>
+                <div style="padding:13px 22px;font-size:14px;color:#555;display:flex;align-items:center;gap:10px"><svg class="ic" style="width:18px;height:18px"><use href="#i-list"/></svg>我的订单</div>
+                <div style="padding:13px 22px;font-size:14px;color:#555;display:flex;align-items:center;gap:10px"><svg class="ic" style="width:18px;height:18px"><use href="#i-ticket"/></svg>优惠券</div>
+                <div style="padding:13px 22px;font-size:14px;color:#555;display:flex;align-items:center;gap:10px"><svg class="ic" style="width:18px;height:18px"><use href="#i-users"/></svg>出行人信息</div>
+                <div style="padding:13px 22px;font-size:14px;color:#555;display:flex;align-items:center;gap:10px"><svg class="ic" style="width:18px;height:18px"><use href="#i-heart"/></svg>我的收藏</div>
+                <div style="padding:13px 22px;font-size:14px;color:#555;display:flex;align-items:center;gap:10px"><svg class="ic" style="width:18px;height:18px"><use href="#i-receipt"/></svg>发票信息</div>
+                <div style="padding:13px 22px;font-size:14px;color:#555;display:flex;align-items:center;gap:10px"><svg class="ic" style="width:18px;height:18px"><use href="#i-headset"/></svg>在线客服</div>
+              </div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:16px">
+              <div style="border-radius:14px;background:var(--grad);padding:28px;color:#fff;box-shadow:var(--shadow)">
+                <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                  <div>
+                    <div style="font-size:14px;opacity:.85;display:flex;align-items:center;gap:8px"><svg class="ic" style="width:18px;height:18px"><use href="#i-coin"/></svg>积分总额</div>
+                    <div style="font-size:36px;font-weight:800;margin-top:10px">¥28,493.43</div>
+                    <div style="display:flex;gap:24px;margin-top:14px;font-size:13px"><span>可用 ¥20,000.43</span><span>冻结 ¥8,493.00</span></div>
+                  </div>
+                  <div style="background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.5);border-radius:18px;padding:8px 18px;font-size:13px;display:flex;align-items:center;gap:5px"><svg class="ic" style="width:15px;height:15px"><use href="#i-book"/></svg>使用规则 ›</div>
+                </div>
+              </div>
+              <div class="pc-card">
+                <div style="display:flex;gap:28px;font-size:14px;border-bottom:1px solid #f0f1f4;padding-bottom:12px">
+                  <span style="color:#26282c;font-weight:700;border-bottom:2px solid var(--brand);padding-bottom:12px">全部</span>
+                  <span style="color:#999">发放</span><span style="color:#999">支付</span><span style="color:#999">退款</span><span style="color:#999">过期</span><span style="color:#999">调账</span>
+                </div>
+                <div style="margin-top:6px">
+                  <div style="display:flex;justify-content:space-between;padding:15px 4px;border-bottom:1px dashed #e6e8ee;align-items:center">
+                    <div><div style="font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px">积分发放 <span style="font-size:11px;color:var(--ok);background:#eaf8ee;border-radius:8px;padding:1px 8px">成功</span></div><div style="font-size:12px;color:#aaa;margin-top:4px">2026-09-01 10:24 · 年度疗养额度</div></div>
+                    <div style="font-size:16px;font-weight:700;color:#2eae63">+¥8,000.00</div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;padding:15px 4px;border-bottom:1px dashed #e6e8ee;align-items:center">
+                    <div><div style="font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px">消费支付 <span style="font-size:11px;color:#fff;background:var(--brand);border-radius:8px;padding:1px 8px">完成</span></div><div style="font-size:12px;color:#aaa;margin-top:4px">2026-08-18 14:02 · 订单 20260818201</div></div>
+                    <div style="font-size:16px;font-weight:700">-¥4,506.57</div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;padding:15px 4px;border-bottom:1px dashed #e6e8ee;align-items:center">
+                    <div><div style="font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px">消费支付 <span style="font-size:11px;color:#fff;background:var(--brand);border-radius:8px;padding:1px 8px">完成</span></div><div style="font-size:12px;color:#aaa;margin-top:4px">2026-08-15 09:40 · 订单 20260815123</div></div>
+                    <div style="font-size:16px;font-weight:700">-¥2,188.00</div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;padding:15px 4px;border-bottom:1px dashed #e6e8ee;align-items:center">
+                    <div><div style="font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px">积分发放 <span style="font-size:11px;color:var(--ok);background:#eaf8ee;border-radius:8px;padding:1px 8px">成功</span></div><div style="font-size:12px;color:#aaa;margin-top:4px">2026-08-10 16:20 · 上季度结转</div></div>
+                    <div style="font-size:16px;font-weight:700;color:#2eae63">+¥12,000.00</div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;padding:15px 4px;border-bottom:1px dashed #e6e8ee;align-items:center">
+                    <div><div style="font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px">订单退款 <span style="font-size:11px;color:var(--warn);background:#fdf3e1;border-radius:8px;padding:1px 8px">进行中</span></div><div style="font-size:12px;color:#aaa;margin-top:4px">2026-08-02 09:15 · 订单 20260802908</div></div>
+                    <div style="font-size:16px;font-weight:700;color:#2eae63">+¥1,000.00</div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;padding:15px 4px;border-bottom:1px dashed #e6e8ee;align-items:center">
+                    <div><div style="font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px">积点过期 <span style="font-size:11px;color:#999;background:#f0f1f4;border-radius:8px;padding:1px 8px">已过期</span></div><div style="font-size:12px;color:#aaa;margin-top:4px">2026-07-31 23:59 · 2025 年度额度</div></div>
+                    <div style="font-size:16px;font-weight:700;color:#b5bac4">-¥900.00</div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;padding:15px 4px;border-bottom:1px dashed #e6e8ee;align-items:center">
+                    <div><div style="font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px">积分调账 <span style="font-size:11px;color:#4a7fd4;background:#eaf0fb;border-radius:8px;padding:1px 8px">已到账</span></div><div style="font-size:12px;color:#aaa;margin-top:4px">2026-07-22 11:08 · 差价补充</div></div>
+                    <div style="font-size:16px;font-weight:700;color:#2eae63">+¥500.00</div>
+                  </div>
+                  <div style="display:flex;justify-content:space-between;padding:15px 4px;align-items:center">
+                    <div><div style="font-size:14px;font-weight:600;display:flex;align-items:center;gap:6px">消费支付 <span style="font-size:11px;color:#fff;background:var(--brand);border-radius:8px;padding:1px 8px">完成</span></div><div style="font-size:12px;color:#aaa;margin-top:4px">2026-07-15 15:30 · 订单 20260715288</div></div>
+                    <div style="font-size:16px;font-weight:700">-¥3,680.00</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="pc-footer">联通数字科技有限公司 · 员工疗休养服务平台</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
